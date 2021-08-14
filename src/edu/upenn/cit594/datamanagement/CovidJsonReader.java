@@ -98,8 +98,6 @@ public class CovidJsonReader implements CovidReader {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			
-			ssss
 			System.out.println("Error: covid data (json file) is not accessible");
 			System.exit(0);
 		}
