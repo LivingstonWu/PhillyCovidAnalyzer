@@ -5,17 +5,17 @@ import java.util.Date;
 public class CovidData {
 	
 	private Date timestamp;
-	private int zipcode;
-	private int negTests;
-	private int posTests;
-	private int deaths;
-	private int hospitalized;
-	private int partiallyVaccinated;
-	private int fullyVaccinated;
+	private Integer zipcode;
+	private Integer negTests;
+	private Integer posTests;
+	private Integer deaths;
+	private Integer hospitalized;
+	private Integer partiallyVaccinated;
+	private Integer fullyVaccinated;
 	
 
 
-	public CovidData(Date timestamp, int zipcode, int negTests, int posTests, int deaths, int hospitalized, int partiallyVaccinated, int fullyVaccinated) {
+	public CovidData(Date timestamp, Integer zipcode, Integer negTests, Integer posTests, Integer deaths, Integer hospitalized, Integer partiallyVaccinated, Integer fullyVaccinated) {
 		this.timestamp = timestamp;
 		this.zipcode = zipcode;
 		this.negTests = negTests;
@@ -28,11 +28,11 @@ public class CovidData {
 	
 	
 	public Date getTimestamp() {return timestamp;}
-	public int getZipcode() {return zipcode;}
-	public int getNegTests() {return negTests;}
-	public int getPosTests() {return posTests;}
-	public int getDeaths() {return deaths;}
-	public int getHospitalized() {return hospitalized;}
-	public int getPartiallyVaccinated() {return partiallyVaccinated;}
-	public int getFullyVaccinated() {return fullyVaccinated;}
+	public Integer getZipcode() {return zipcode;}
+	public Integer getNegTests() {return negTests;}
+	public Integer getPosTests() {return posTests;}
+	public Integer getDeaths() {return deaths;}
+	public Integer getHospitalized() {return hospitalized;}
+	public Integer getPartiallyVaccinated() {return partiallyVaccinated;}
+	public Integer getFullyVaccinated() {return fullyVaccinated;}
 }

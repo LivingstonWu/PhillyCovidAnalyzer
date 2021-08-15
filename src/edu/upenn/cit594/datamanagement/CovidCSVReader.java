@@ -58,38 +58,38 @@ public class CovidCSVReader implements CovidReader {
 				
 				String date_raw = dataMapping.get("etl_timestamp");
 				date_raw = date_raw.replaceAll("^\"+|\"+$", "");
-		    	String pattern = "YYYY-MM-DD hh:mm:ss";
+		    	String pattern = "yyyy-MM-dd HH:mm:ss";
 		    	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		    	Date timestamp = simpleDateFormat.parse(date_raw);
 		    	
-				int zipcode = Integer.parseInt(dataMapping.get("zip_code"));
+		    	Integer zipcode = Integer.parseInt(dataMapping.get("zip_code"));
 				
-				int negTests = 0;
+		    	Integer negTests = null;
 				if (dataMapping.get("NEG_tests").length() != 0) {
 					negTests = Integer.parseInt(dataMapping.get("NEG_tests"));
 				}
 				
-				int posTests = 0;
+				Integer posTests = null;
 				if(dataMapping.get("POS_tests").length() != 0) {
 					posTests = Integer.parseInt(dataMapping.get("POS_tests"));
 				}				
 				
-				int deaths = 0;
+				Integer deaths = null;
 				if (dataMapping.get("deaths").length() != 0) {
 					deaths = Integer.parseInt(dataMapping.get("deaths"));
 				}
 				
-				int hospitalized = 0;
+				Integer hospitalized = null;
 				if (dataMapping.get("hospitalized").length() != 0) {
 					hospitalized = Integer.parseInt(dataMapping.get("hospitalized"));
 				}
 				
-				int partiallyVaccinated = 0;
+				Integer partiallyVaccinated = null;
 				if (dataMapping.get("partially_vaccinated").length() != 0) {
 					partiallyVaccinated = Integer.parseInt(dataMapping.get("partially_vaccinated"));
 				}
 				
-				int fullyVaccinated = 0;
+				Integer fullyVaccinated = null;
 				if (dataMapping.get("fully_vaccinated").length() != 0) {
 					fullyVaccinated = Integer.parseInt(dataMapping.get("fully_vaccinated"));
 				}

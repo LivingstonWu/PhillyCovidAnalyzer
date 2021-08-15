@@ -30,7 +30,7 @@ public class CovidJsonReader implements CovidReader {
     	
     	JSONParser jsonparser = new JSONParser();
     	
-    	String pattern = "YYYY-MM-DD hh:mm:ss";
+    	String pattern = "yyyy-MM-dd HH:mm:ss";
     	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
     	
     	try {
@@ -40,41 +40,42 @@ public class CovidJsonReader implements CovidReader {
 				JSONObject dataentry = (JSONObject) i;
 				
 				// read data from json object
-				String date_raw = (String) dataentry.get("etl_timestamp");				
-				Date timestamp = simpleDateFormat.parse(date_raw);
+				String date_raw = (String) dataentry.get("etl_timestamp");					
+		    	Date timestamp = simpleDateFormat.parse(date_raw);
 				
-				int zipcode = ((Long) dataentry.get("zip_code")).intValue();
+
+		    	Integer zipcode = ((Long) dataentry.get("zip_code")).intValue();
 				
-				int negTests = 0;
+		    	Integer negTests = null;
 				if (dataentry.get("NEG_tests") != null) {
 					negTests = ((Long) dataentry.get("NEG_tests")).intValue();
 				} 
 				
 				
-				int posTests = 0;
+				Integer posTests = null;
 				if (dataentry.get("POS_tests") != null) {
 					posTests = ((Long) dataentry.get("POS_tests")).intValue();
 				} 			
 				
 				
-				int deaths = 0;
+				Integer deaths = null;
 				if (dataentry.get("deaths") != null) {
 					deaths = ((Long) dataentry.get("deaths")).intValue();
 				} 		
 				
-				int hospitalized = 0;
+				Integer hospitalized = null;
 				if (dataentry.get("hospitalized") != null) {
 					hospitalized = ((Long) dataentry.get("hospitalized")).intValue();
 				} 
 				
 				
-				int partiallyVaccinated = 0;
+				Integer partiallyVaccinated = null;
 				if (dataentry.get("partially_vaccinated") != null) {
 					partiallyVaccinated = ((Long) dataentry.get("partially_vaccinated")).intValue();
 				} 
 				
 				
-				int fullyVaccinated = 0;
+				Integer fullyVaccinated = null;
 				if (dataentry.get("fully_vaccinated") != null) {
 					fullyVaccinated = ((Long) dataentry.get("fully_vaccinated")).intValue();
 				} 

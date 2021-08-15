@@ -1,6 +1,9 @@
 package edu.upenn.cit594.ui;
 
+import java.text.DecimalFormat;
+import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 import edu.upenn.cit594.processor.Processor;
 
@@ -21,8 +24,9 @@ public class UI {
 		System.out.println("Enter number 3 to show the average market value for residences in a specified ZIP Code.");
 		System.out.println("Enter number 4 to show the average total livable area for residences in a specified ZIP Code.");
 		System.out.println("Enter number 5 to show the total residential market value per capita for a specified ZIP Code.");
-		System.out.println("Enter number 6 to show the .");    // pending: show the result of custom feature
+		System.out.println("Enter number 6 to show the custom attribute.");  
 		System.out.println("Enter number 0 to exit the program.");
+		System.out.println("Please enter the number to check covid data: ");
 		int choice = in.nextInt();
 		
 		while (choice != 0) {
@@ -51,7 +55,7 @@ public class UI {
 				printCustomFeature();
 			}
 			
-			System.out.println("Please enter the number:");
+			System.out.println("Please enter the number to check covid data:");
 			choice = in.nextInt();
 		}
 		
@@ -61,28 +65,37 @@ public class UI {
 	
 	
 	protected void printPopulationAllZip() {
-		System.out.println("Total Population for All ZIP Codes: ");  // pending for edit
+		System.out.println("Total Population for All ZIP Codes: " + this.processor.getTotalPopulation());  // pending for edit
 	}
 	
 	protected void printVaccinationPerZip() {
 		System.out.println("Are you looking for total partial or full Vaccinations per capitas for each zipcode? Please type in partial/full: ");
 		String input = in.next();
 		input = input.toLowerCase();
-		if (input == "partial") {
+
+		if (input.equals("partial")) {
 			
-			System.out.println(String.format("%6s %6s", "ENGIN", "OUTPUT"));
+			System.out.println(String.format("%5s %5s", "ENGIN", "OUTPUT"));
 			
-			// pending edit for printing data
+			TreeMap<Integer, Double> partialVaccinationData = this.processor.getPartialVaccinations();
+			
+	        for (Entry<Integer, Double> entry : partialVaccinationData.entrySet()) {
+	        	System.out.printf( "%5d %5f \n", entry.getKey(), entry.getValue());
+	        }
+									
+			System.out.println(String.format("%5s %5s", "END", "OUTPUT"));
+			
+		} else if (input.equals("full")) {
+			
+			System.out.println(String.format("%5s %5s", "ENGIN", "OUTPUT"));
+			
+			TreeMap<Integer, Double> fullVaccinationData = this.processor.getFullVaccinations();
+			
+	        for (Entry<Integer, Double> entry : fullVaccinationData.entrySet()) {
+	        	System.out.printf( "%5d %5f \n", entry.getKey(), entry.getValue());
+	        }
 						
-			System.out.println(String.format("%6s %6s", "END", "OUTPUT"));
-			
-		} else if (input == "full") {
-			
-			System.out.println(String.format("%6s %6s", "ENGIN", "OUTPUT"));
-			
-			// pending edit for printing data
-						
-			System.out.println(String.format("%6s %6s", "END", "OUTPUT"));
+			System.out.println(String.format("%5s %5s", "END", "OUTPUT"));
 			
 		} else {
 			System.out.println("The input is not valid.");

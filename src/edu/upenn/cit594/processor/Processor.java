@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.Map.Entry;
 
 import edu.upenn.cit594.datamanagement.CovidReader;
 import edu.upenn.cit594.datamanagement.PopulationReader;
@@ -16,14 +18,16 @@ public class Processor {
 	protected CovidReader covidReader;
 	protected Map<Integer, ArrayList<CovidData>> covidData;
 	protected PopulationReader populationReader;
+	protected HashMap<Integer, Integer> populationData;
 	protected PropertiesReader propertiesReader;
 	
 	public Processor(CovidReader covidReader, PopulationReader populationReader, PropertiesReader propertiesReader) {
 		this.covidReader = covidReader;
 		this.covidData = covidReader.getAllCovidData();
 		this.populationReader = populationReader;
-		this.propertiesReader = propertiesReader;
-		// test
+		this.populationData = populationReader.getPopulation();
+//		this.propertiesReader = propertiesReader;
+		
 	}
 	
 	
@@ -38,7 +42,7 @@ public class Processor {
 			Calendar calendar = Calendar.getInstance();
 			calendar.set(2018, 1, 1, 1, 1, 1);
 			Date latestDate = calendar.getTime();       // initialize date to a historical date
-			int TotalPartial = 0;
+			Integer TotalPartial = 0;
 			for (CovidData dataEntry : temp) {
 				Date current_time = dataEntry.getTimestamp();
 				if (current_time.after(latestDate)) {
@@ -64,7 +68,7 @@ public class Processor {
 			Calendar calendar = Calendar.getInstance();
 			calendar.set(2018, 1, 1, 1, 1, 1);
 			Date latestDate = calendar.getTime();       // initialize date to a historical date
-			int TotalFull = 0;
+			Integer TotalFull = 0;
 			for (CovidData dataEntry : temp) {
 				Date current_time = dataEntry.getTimestamp();
 				if (current_time.after(latestDate)) {
@@ -90,7 +94,7 @@ public class Processor {
 			Calendar calendar = Calendar.getInstance();
 			calendar.set(2018, 1, 1, 1, 1, 1);
 			Date latestDate = calendar.getTime();       // initialize date to a historical date
-			int deaths = 0;
+			Integer deaths = 0;
 			for (CovidData dataEntry : temp) {
 				Date current_time = dataEntry.getTimestamp();
 				if (current_time.after(latestDate)) {
@@ -117,7 +121,7 @@ public class Processor {
 			Calendar calendar = Calendar.getInstance();
 			calendar.set(2018, 1, 1, 1, 1, 1);
 			Date latestDate = calendar.getTime();       // initialize date to a historical date
-			int hospitalized = 0;
+			Integer hospitalized = 0;
 			for (CovidData dataEntry : temp) {
 				Date current_time = dataEntry.getTimestamp();
 				if (current_time.after(latestDate)) {
@@ -130,6 +134,79 @@ public class Processor {
 		
 		return HospitalizedPerCapita;
 	}
+	
+	
+	// get total population for all zip code
+	public int getTotalPopulation() {
+		
+		int totalPopulation = 0;
+		
+		for (int i : populationData.values()) {
+			totalPopulation += i;
+		}
+		
+		return totalPopulation;
+	}
+	
+
+	
+	// get full vaccinations per capita
+	
+	public TreeMap<Integer, Double> getFullVaccinations(){
+		
+		// get the latest partial vaccinations data from the raw covid data
+		Map<Integer, Integer> fullVaccinationTemp = getTotalFullPerCapita(this.covidData);				
+		
+		TreeMap<Integer, Double> result = new TreeMap<Integer, Double>();
+		
+		for (Integer zip : fullVaccinationTemp.keySet()) {
+			Integer fullVaccination = fullVaccinationTemp.get(zip);
+			
+			// ignore cases when zip is not listed in the population input file
+			// ignore cases when the total aggregate vaccinations is 0
+			
+			if (populationData.get(zip) != null && fullVaccination != null && fullVaccination != 0 ) {
+				Integer population = this.populationData.get(zip);
+				Double fullVaccinationpct = (double) fullVaccination / (double) population;	
+				fullVaccinationpct = (double)Math.round(fullVaccinationpct * 10000d) / 10000d;
+				result.put(zip, fullVaccinationpct);
+			}
+			
+		}				
+		return result;
+	}
+	
+	
+
+	// get partial vaccinations per capita
+	
+	public TreeMap<Integer, Double> getPartialVaccinations(){
+		
+		// get the latest partial vaccinations data from the raw covid data
+		Map<Integer, Integer> partialVaccinationTemp = getTotalPartialPerCapita(this.covidData);
+		
+		TreeMap<Integer, Double> result = new TreeMap<Integer, Double>();
+		
+		for (Integer zip : partialVaccinationTemp.keySet()) {
+			
+
+			Integer partialVaccination = partialVaccinationTemp.get(zip);
+			
+			// ignore cases when zip is not listed in the population input file
+			//ignore cases when the total aggregate vaccinations is 0
+			
+			if (populationData.get(zip) != null && partialVaccination != null && partialVaccination != 0 ) {
+			
+			
+			int population = this.populationData.get(zip);
+			Double partialVaccinationpct = (double)partialVaccination / (double)population;
+			partialVaccinationpct = (double)Math.round(partialVaccinationpct * 10000d) / 10000d;
+			result.put(zip, partialVaccinationpct);
+			}
+			
+		}
+		return result;
+		}
 	
 	
 	

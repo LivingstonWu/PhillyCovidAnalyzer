@@ -6,9 +6,11 @@ import edu.upenn.cit594.datamanagement.CovidReader;
 import edu.upenn.cit594.datamanagement.PopulationReader;
 import edu.upenn.cit594.datamanagement.PropertiesReader;
 import edu.upenn.cit594.processor.Processor;
+import edu.upenn.cit594.ui.UI;
 
 public class Main {
     public static void main(String[] args) {
+    	
     	
     	// check the number of arguments
     	if (args.length < 4) {
@@ -17,27 +19,41 @@ public class Main {
 		}
     	
     	
+    	//get covid data
 		String filename = args[0];
 		String[] filenameSplit = filename.split("\\.");
 		filenameSplit[1] = filenameSplit[1].toLowerCase();
 
 		
-		CovidReader reader = null;
+		CovidReader covidReader = null;
 		if(filenameSplit[1].equals("csv")) {
-			reader = new CovidCSVReader(filename);
+			covidReader = new CovidCSVReader(filename);
 		} else if (filenameSplit[1].equals("json")){
-			reader = new CovidJsonReader(filename);
+			covidReader = new CovidJsonReader(filename);
 		} else {
 			System.out.println("Error: covid data file does not match a recognized extension");
 			System.exit(0);
 		}    	
     	
 		
-//		Processor processor = new Processor(covidReader, populationReader, propertiesReader);
+		// get property data
 		
-		// temp: testing for csv input		
-		reader.getAllCovidData();
-
+		
+		
+		
+		// get population data
+		PopulationReader populationReader = new PopulationReader(args[2]);
+		
+		
+		// process data
+		Processor processor = new Processor(covidReader, populationReader, propertiesReader);
+		
+		
+		// UI for display
+		UI ui = new UI(processor);
+		ui.start();
+		
+		// create log file
     	
     }
 }
