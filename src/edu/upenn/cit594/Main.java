@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
     	
     	// check the number of arguments
-    	if (args.length < 3) {
+    	if (args.length < 4) {
 			System.out.println("Error: number of arguments is incorrect");
 			System.exit(0);
 		}
@@ -37,7 +37,7 @@ public class Main {
 		
 		// temp: testing for csv input		
 		reader.getAllCovidData();
-		
+
     	
     }
 }
