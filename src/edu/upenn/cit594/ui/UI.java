@@ -5,16 +5,19 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.TreeMap;
 
+import edu.upenn.cit594.logging.Logger;
 import edu.upenn.cit594.processor.Processor;
 
 public class UI {
 	
 	protected Processor processor;
 	protected Scanner in;
+	protected Logger log;
 	
-	public UI(Processor processor) {
+	public UI(Processor processor, Logger log) {
 		this.processor = processor;
 		in = new Scanner(System.in);
+		this.log = log;
 	}
 	
 	public void start() {
@@ -28,6 +31,7 @@ public class UI {
 		System.out.println("Enter number 0 to exit the program.");
 		System.out.println("Please enter the number to check covid data: ");
 		int choice = in.nextInt();
+		log.logInput(String.valueOf(choice));
 		
 		while (choice != 0) {
 			
@@ -50,6 +54,7 @@ public class UI {
 			
 			System.out.println("Please enter the number to check covid data:");
 			choice = in.nextInt();
+			log.logInput(String.valueOf(choice));
 		}
 		
 		System.out.println("Program ended.");
@@ -64,6 +69,7 @@ public class UI {
 	protected void printVaccinationPerZip() {
 		System.out.println("Are you looking for total partial or full Vaccinations per capitas for each zipcode? Please type in partial/full: ");
 		String input = in.next();
+		log.logInput(input);
 		input = input.toLowerCase();
 
 		if (input.equals("partial")) {
@@ -99,6 +105,7 @@ public class UI {
 	protected void printAvgMktValue() {
 		System.out.println("Enter a zipcode to show the average market value: ");
 		int zip = in.nextInt();
+		log.logInput(String.valueOf(zip));
 		
 		// pending edit for printing data
 		
@@ -108,6 +115,7 @@ public class UI {
 		
 		System.out.println("Enter a zipcode to show the average market value: ");
 		int zip = in.nextInt();
+		log.logInput(String.valueOf(zip));
 		
 		// pending edit for printing data
 		
@@ -116,7 +124,7 @@ public class UI {
 	protected void printResdMktValuePerCap() {
 		System.out.println("Enter a zipcode to show the average market value: ");
 		int zip = in.nextInt();
-		
+		log.logInput(String.valueOf(zip));
 		// pending edit for printing data
 	}
 	

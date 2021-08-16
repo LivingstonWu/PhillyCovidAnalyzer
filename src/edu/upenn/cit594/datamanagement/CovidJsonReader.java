@@ -42,9 +42,9 @@ public class CovidJsonReader implements CovidReader {
 				// read data from json object
 				String date_raw = (String) dataentry.get("etl_timestamp");					
 		    	Date timestamp = simpleDateFormat.parse(date_raw);
-				
 
-		    	String zipcode = (String) dataentry.get("zip_code");
+		    	String zipcode = String.valueOf(dataentry.get("zip_code"));
+		    	
 				
 		    	Integer negTests = null;
 				if (dataentry.get("NEG_tests") != null) {
