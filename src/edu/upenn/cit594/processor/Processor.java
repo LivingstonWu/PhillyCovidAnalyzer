@@ -1,17 +1,13 @@
 package edu.upenn.cit594.processor;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.Map.Entry;
 
 import edu.upenn.cit594.datamanagement.CovidReader;
 import edu.upenn.cit594.datamanagement.PopulationReader;
 import edu.upenn.cit594.datamanagement.PropertiesReader;
 import edu.upenn.cit594.util.CovidData;
+import edu.upenn.cit594.util.Property;
 
 public class Processor {
 
@@ -20,13 +16,15 @@ public class Processor {
 	protected PopulationReader populationReader;
 	protected HashMap<String, Integer> populationData;
 	protected PropertiesReader propertiesReader;
+	protected Map<String, LinkedList<Property>> propertiesData;
 	
 	public Processor(CovidReader covidReader, PopulationReader populationReader, PropertiesReader propertiesReader) {
 		this.covidReader = covidReader;
 		this.covidData = covidReader.getAllCovidData();
 		this.populationReader = populationReader;
 		this.populationData = populationReader.getPopulation();
-//		this.propertiesReader = propertiesReader;
+		this.propertiesReader = propertiesReader;
+		this.propertiesData = propertiesReader.getAllProperties();
 		
 	}
 	
@@ -207,7 +205,7 @@ public class Processor {
 			
 		}
 		return result;
-		}
+	}
 	
 	
 	
@@ -218,10 +216,72 @@ public class Processor {
 		value = Math.floor(value);
 		value = value / Math.pow(10, decimal);
 //		System.out.println(value);
-		
 		return value;
 	}
-	
+
+
+
+	// method3  average market value
+	// user input zipcode
+	// deal with invalid zipcode(!this.propertiesData.containsKey(zipcode)) input in UI
+	public int getAverageMarketValue(String zipcode) {
+		AverageCalculator marketValueCalculator = new AverageMarketValueCalculator();
+		if (!this.propertiesData.containsKey(zipcode)) return 0;
+		return marketValueCalculator.calculateAverage(zipcode, this.propertiesData);
+	}
+
+	// method4  average livable area
+	// user input zipcode
+	// deal with invalid zipcode input in UI
+	public int getAverageLivableArea(String zipcode) {
+		AverageCalculator livableAreaCalculator  = new AverageLivableAreaCalculator();
+		if (!this.propertiesData.containsKey(zipcode)) return 0;
+		return livableAreaCalculator.calculateAverage(zipcode, this.propertiesData);
+	}
+
+
+	// method5  total residential market value per capita
+	// user input zipcode
+	// deal with invalid zipcode input in UI
+	public int getTotalResidentialValuePerCapita(String zipcode) {
+		double totalResidentialMarketValue = 0;
+		if (!populationData.containsKey(zipcode) || !propertiesData.containsKey(zipcode)){
+			return 0;
+		}
+		int totalPopulationAtZipcode = this.populationData.get(zipcode);
+
+		LinkedList<Property> propertiesByZip = propertiesData.get(zipcode);
+		for (Property currentProperty : propertiesByZip) {
+			try {
+				double currentMarketValue = Double.parseDouble(currentProperty.getMarketValue());
+				totalResidentialMarketValue += currentMarketValue;
+			} catch(Exception e) {
+				// logging
+			}
+		}
+
+		if (totalPopulationAtZipcode == 0 || totalResidentialMarketValue == 0) return 0;
+		int perCapita = (int) (totalResidentialMarketValue/totalPopulationAtZipcode);
+		return perCapita;
+	}
+
+
+	// method 6: death to "average total livable area" ratio per capita, by zipcpde
+	// input: zipcode
+	// resulting metric = total death at the zipcode / getAverageLivableArea(zipcode) / population at zipcode
+	public int getDeathToAverageLivablePerCapita(String zipcode) {
+		if (!populationData.containsKey(zipcode) || !covidData.containsKey(zipcode) || !propertiesData.containsKey(zipcode)){
+			return 0;
+		}
+		int averageLivableArea = getAverageLivableArea(zipcode);
+		Map<String, Integer> deathZipMap =  getDeathsPerCapita(this.covidData);
+		int deathCount = deathZipMap.get(zipcode);
+		int populationAtZip = this.populationData.get(zipcode);
+		int result = deathCount/averageLivableArea/populationAtZip;
+		return result;
+
+	}
+
 
 	
 }
