@@ -49,6 +49,7 @@ public class UI {
 				printCustomFeature();
 			} else {
 				System.out.println("Error: not valid input.");
+				log.logOutPut("Error: not valid input.");
 				break;
 			}
 			
@@ -63,7 +64,9 @@ public class UI {
 	
 	
 	protected void printPopulationAllZip() {
-		System.out.println("Total Population for All ZIP Codes: " + this.processor.getTotalPopulation());  // pending for edit
+		String temp = "Total Population for All ZIP Codes: " + this.processor.getTotalPopulation();
+		System.out.println(temp);
+		log.logOutPut(temp);
 	}
 	
 	protected void printVaccinationPerZip() {
@@ -74,64 +77,138 @@ public class UI {
 
 		if (input.equalsIgnoreCase("partial")) {
 			
-			System.out.println(String.format("%5s %5s", "ENGIN", "OUTPUT"));
+			System.out.println("BEGIN OUTPUT");
+			log.logOutPut("BEGIN OUTPUT");
 			
 			TreeMap<String, Double> partialVaccinationData = this.processor.getPartialVaccinations();
 			
 	        for (Entry<String, Double> entry : partialVaccinationData.entrySet()) {
-	        	System.out.printf( "%5s %1.4f \n", entry.getKey(), entry.getValue());
+	        	String temp = (entry.getKey() + "\t" + entry.getValue());
+//	        	System.out.printf( "%5s %1.4f \n", entry.getKey(), entry.getValue());
+	        	System.out.printf(temp + "\n");
+	        	log.logOutPut(temp);
 	        }
 									
-			System.out.println(String.format("%5s %5s", "END", "OUTPUT"));
+	        System.out.println("END OUTPUT");
+	        log.logOutPut("END OUTPUT");
 			
 		} else if (input.equalsIgnoreCase("full")) {
 			
-			System.out.println(String.format("%5s %5s", "BEGIN", "OUTPUT"));
+			System.out.println("BEGIN OUTPUT");
+			log.logOutPut("BEGIN OUTPUT");
 			
 			TreeMap<String, Double> fullVaccinationData = this.processor.getFullVaccinations();
 			
 	        for (Entry<String, Double> entry : fullVaccinationData.entrySet()) {
-	        	System.out.printf( "%5s %1.4f \n", entry.getKey(), entry.getValue());
+	        	
+	        	String temp = (entry.getKey() + "\t" + entry.getValue());
+//	        	System.out.printf( "%5s %1.4f \n", entry.getKey(), entry.getValue());
+	        	System.out.printf(temp+ "\n");
+	        	log.logOutPut(temp);
+	        	
 	        }
 						
-			System.out.println(String.format("%3s %5s", "END", "OUTPUT"));
+	        System.out.println("END OUTPUT");
+	        log.logOutPut("END OUTPUT");
 			
 		} else {
 			System.out.println("The input is not valid.");
+			log.logOutPut("The input is not valid.");
 		}
 		
 	}
 	
 	protected void printAvgMktValue() {
-		System.out.println("Enter a zipcode to show the average market value: ");
-		String zip = in.next();
-		log.logInput(zip);
-		int result = this.processor.getAverageMarketValue(zip);
-		System.out.println(result);
+		
+		while (true) {
+			System.out.println("Enter a zipcode to show the average market value: ");
+			String zip = in.next();
+			log.logInput(zip);
+			int result = this.processor.getAverageMarketValue(zip);
+			
+			if (result != 0) {
+				System.out.println(result);
+				log.logOutPut(String.valueOf(result));
+				break;
+			} else {
+				System.out.println("Invalid zipcode.");
+				log.logOutPut("Invalid zipcode.");
+			}
+			
+
+		}
+		
+		
+
 	}
 	
 	protected void printAvgLivArea() {
-		System.out.println("Enter a zipcode to show the average total livable area: ");
-		String zip = in.next();
-		log.logInput(zip);
-		int result = this.processor.getAverageLivableArea(zip);
-		System.out.println(result);
+		
+		while (true) {
+			System.out.println("Enter a zipcode to show the average total livable area: ");
+			String zip = in.next();
+			log.logInput(zip);
+			int result = this.processor.getAverageLivableArea(zip);
+			
+			if (result != 0) {
+				System.out.println(result);
+				log.logOutPut(String.valueOf(result));
+				break;
+			} else {
+				System.out.println("Invalid zipcode.");
+				log.logOutPut("Invalid zipcode.");
+			}
+			
+
+		}
+		
+
 	}
 	
 	protected void printResdMktValuePerCap() {
-		System.out.println("Enter a zipcode to show the total residential market per capita: ");
-		String zip = in.next();
-		log.logInput(zip);
-		int result = this.processor.getTotalResidentialValuePerCapita(zip);
-		System.out.println(result);
+		
+		while (true) {
+			System.out.println("Enter a zipcode to show the total residential market per capita: ");
+			String zip = in.next();
+			log.logInput(zip);
+			int result = this.processor.getTotalResidentialValuePerCapita(zip);
+						
+			if (result != 0) {
+				System.out.println(result);
+				log.logOutPut(String.valueOf(result));
+				break;
+			} else {
+				System.out.println("Invalid zipcode.");
+				log.logOutPut("Invalid zipcode.");
+			}
+
+		}
+		
+
 	}
 	
 	protected void printCustomFeature() {
-		System.out.println("Enter a zipcode to show death to average total livable area ratio per capita: ");
-		String zip = in.next();
-		log.logInput(zip);
-		double result = this.processor.getDeathToAverageLivablePerCapita(zip);
-		System.out.println(result);
+		
+		while (true) {
+			System.out.println("Enter a zipcode to show death to average total livable area ratio per capita: ");
+			String zip = in.next();
+			log.logInput(zip);
+			double result = this.processor.getDeathToAverageLivablePerCapita(zip);
+			
+			if (result != 0) {
+				System.out.println(result);
+				log.logOutPut(String.valueOf(result));
+				log.logOutPut(String.valueOf(result));
+				break;
+			} else {
+				System.out.println("Invalid zipcode.");
+				log.logOutPut("Invalid zipcode.");
+			}
+			
+		}
+		
+
+
 	}
 	
 	

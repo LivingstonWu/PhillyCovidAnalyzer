@@ -77,6 +77,7 @@ public class BasicTests {
         int state = 0;
         String line;
         while ((line = output_reader.readLine()) != null) {
+
             if (state == 0 || state == 2) {
                 if (line.equals("BEGIN OUTPUT"))
                     state = 1;
@@ -87,6 +88,7 @@ public class BasicTests {
                     items.add(line);
             }
         }
+
         if(state != 2) {
             System.err.println("No OUTPUT blocks detected");
             return null;

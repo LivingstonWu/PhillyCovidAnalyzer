@@ -1,9 +1,9 @@
 package edu.upenn.cit594.logging;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 
 public class Logger {
 
@@ -43,7 +43,7 @@ public class Logger {
     	}
     	   	
         try {
-            out = new PrintWriter(logFile);
+            out = new PrintWriter(new FileOutputStream(logFile, true));
         } catch (Exception e) {
             System.out.println("Error when writing log file.");
         }
@@ -58,8 +58,8 @@ public class Logger {
 //    	String pattern = "yyyy-MM-dd HH:mm:ss";
 //    	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
     	   	
-    	out.println(currentTime + " ");
-        out.print(msg);
+    	out.print(currentTime +"\t");
+        out.print(msg + "\n");
         out.flush();
     }
     
@@ -72,15 +72,21 @@ public class Logger {
 //    	String pattern = "yyyy-MM-dd HH:mm:ss";
 //    	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
     	   	
-    	out.println(currentTime);
-    	out.print("\t");
+    	out.print(currentTime + "\t");
     	
     	for (String s: args) {
     		out.print(s);
     		out.print("\t");
     		}
+    	out.print("\n");
     	       
         out.flush();
+    }
+    
+    
+    
+    public void logOutPut(String msg) {
+    	out.print(msg + "\n");
     }
     
     
