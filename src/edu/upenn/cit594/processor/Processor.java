@@ -169,6 +169,7 @@ public class Processor {
 				Integer population = this.populationData.get(zip);
 				Double fullVaccinationpct = (double) fullVaccination / (double) population;	
 				fullVaccinationpct = (double)Math.round(fullVaccinationpct * 10000d) / 10000d;
+				fullVaccinationpct = truncatedDouble(fullVaccinationpct, 4);
 				result.put(zip, fullVaccinationpct);
 			}
 			
@@ -200,7 +201,7 @@ public class Processor {
 			
 			int population = this.populationData.get(zip);
 			Double partialVaccinationpct = (double)partialVaccination / (double)population;
-			partialVaccinationpct = (double)Math.round(partialVaccinationpct * 10000d) / 10000d;
+			partialVaccinationpct = truncatedDouble(partialVaccinationpct, 4);
 			result.put(zip, partialVaccinationpct);
 			}
 			
@@ -209,5 +210,18 @@ public class Processor {
 		}
 	
 	
+	
+	// truncated double
+	public Double truncatedDouble(Double value, int decimal) {
+		
+		value = value * Math.pow(10, decimal);
+		value = Math.floor(value);
+		value = value / Math.pow(10, decimal);
+//		System.out.println(value);
+		
+		return value;
+	}
+	
+
 	
 }
