@@ -16,9 +16,9 @@ import edu.upenn.cit594.util.CovidData;
 public class Processor {
 
 	protected CovidReader covidReader;
-	protected Map<Integer, ArrayList<CovidData>> covidData;
+	protected Map<String, ArrayList<CovidData>> covidData;
 	protected PopulationReader populationReader;
-	protected HashMap<Integer, Integer> populationData;
+	protected HashMap<String, Integer> populationData;
 	protected PropertiesReader propertiesReader;
 	
 	public Processor(CovidReader covidReader, PopulationReader populationReader, PropertiesReader propertiesReader) {
@@ -32,11 +32,11 @@ public class Processor {
 	
 	
 	// get the latest Total Partial Vaccination  Per Capita
-	public Map<Integer, Integer> getTotalPartialPerCapita(Map<Integer, ArrayList<CovidData>> covidData) {
+	public Map<String, Integer> getTotalPartialPerCapita(Map<String, ArrayList<CovidData>> covidData) {
 		
-		Map<Integer, Integer> TotalPartialPerCapita = new HashMap<Integer, Integer>();
+		Map<String, Integer> TotalPartialPerCapita = new HashMap<String, Integer>();
 		
-		for (Integer zip : covidData.keySet()) {
+		for (String zip : covidData.keySet()) {
 			ArrayList<CovidData> temp = covidData.get(zip);
 			
 			Calendar calendar = Calendar.getInstance();
@@ -58,11 +58,11 @@ public class Processor {
 	
 	
 	// get the latest Total Full Vaccination  Per Capita
-	public Map<Integer, Integer> getTotalFullPerCapita(Map<Integer, ArrayList<CovidData>> covidData) {
+	public Map<String, Integer> getTotalFullPerCapita(Map<String, ArrayList<CovidData>> covidData) {
 		
-		Map<Integer, Integer> TotalFullPerCapita = new HashMap<Integer, Integer>();
+		Map<String, Integer> TotalFullPerCapita = new HashMap<String, Integer>();
 		
-		for (Integer zip : covidData.keySet()) {
+		for (String zip : covidData.keySet()) {
 			ArrayList<CovidData> temp = covidData.get(zip);
 			
 			Calendar calendar = Calendar.getInstance();
@@ -84,11 +84,11 @@ public class Processor {
 	
 	
 	// get the latest Total Deaths Vaccination Per Capita
-	public Map<Integer, Integer> getDeathsPerCapita(Map<Integer, ArrayList<CovidData>> covidData) {
+	public Map<String, Integer> getDeathsPerCapita(Map<String, ArrayList<CovidData>> covidData) {
 		
-		Map<Integer, Integer> DeathsPerCapita = new HashMap<Integer, Integer>();
+		Map<String, Integer> DeathsPerCapita = new HashMap<String, Integer>();
 		
-		for (Integer zip : covidData.keySet()) {
+		for (String zip : covidData.keySet()) {
 			ArrayList<CovidData> temp = covidData.get(zip);
 			
 			Calendar calendar = Calendar.getInstance();
@@ -111,11 +111,11 @@ public class Processor {
 	
 	
 	// get the latest Total Hospitalized Vaccination Per Capita
-	public Map<Integer, Integer> getHospitalizedPerCapita(Map<Integer, ArrayList<CovidData>> covidData) {
+	public Map<String, Integer> getHospitalizedPerCapita(Map<String, ArrayList<CovidData>> covidData) {
 		
-		Map<Integer, Integer> HospitalizedPerCapita = new HashMap<Integer, Integer>();
+		Map<String, Integer> HospitalizedPerCapita = new HashMap<String, Integer>();
 		
-		for (Integer zip : covidData.keySet()) {
+		for (String zip : covidData.keySet()) {
 			ArrayList<CovidData> temp = covidData.get(zip);
 			
 			Calendar calendar = Calendar.getInstance();
@@ -152,14 +152,14 @@ public class Processor {
 	
 	// get full vaccinations per capita
 	
-	public TreeMap<Integer, Double> getFullVaccinations(){
+	public TreeMap<String, Double> getFullVaccinations(){
 		
 		// get the latest partial vaccinations data from the raw covid data
-		Map<Integer, Integer> fullVaccinationTemp = getTotalFullPerCapita(this.covidData);				
+		Map<String, Integer> fullVaccinationTemp = getTotalFullPerCapita(this.covidData);				
 		
-		TreeMap<Integer, Double> result = new TreeMap<Integer, Double>();
+		TreeMap<String, Double> result = new TreeMap<String, Double>();
 		
-		for (Integer zip : fullVaccinationTemp.keySet()) {
+		for (String zip : fullVaccinationTemp.keySet()) {
 			Integer fullVaccination = fullVaccinationTemp.get(zip);
 			
 			// ignore cases when zip is not listed in the population input file
@@ -181,14 +181,14 @@ public class Processor {
 
 	// get partial vaccinations per capita
 	
-	public TreeMap<Integer, Double> getPartialVaccinations(){
+	public TreeMap<String, Double> getPartialVaccinations(){
 		
 		// get the latest partial vaccinations data from the raw covid data
-		Map<Integer, Integer> partialVaccinationTemp = getTotalPartialPerCapita(this.covidData);
+		Map<String, Integer> partialVaccinationTemp = getTotalPartialPerCapita(this.covidData);
 		
-		TreeMap<Integer, Double> result = new TreeMap<Integer, Double>();
+		TreeMap<String, Double> result = new TreeMap<String, Double>();
 		
-		for (Integer zip : partialVaccinationTemp.keySet()) {
+		for (String zip : partialVaccinationTemp.keySet()) {
 			
 
 			Integer partialVaccination = partialVaccinationTemp.get(zip);

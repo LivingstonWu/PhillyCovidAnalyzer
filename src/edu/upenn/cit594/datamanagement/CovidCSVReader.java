@@ -24,9 +24,9 @@ public class CovidCSVReader implements CovidReader {
 	
 
     @Override
-    public Map<Integer, ArrayList<CovidData>> getAllCovidData() {
+    public Map<String, ArrayList<CovidData>> getAllCovidData() {
     	
-    	Map<Integer, ArrayList<CovidData>> CovidDataMap = new HashMap<Integer, ArrayList<CovidData>>();
+    	Map<String, ArrayList<CovidData>> CovidDataMap = new HashMap<String, ArrayList<CovidData>>();
     	
 		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
 			
@@ -62,7 +62,7 @@ public class CovidCSVReader implements CovidReader {
 		    	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		    	Date timestamp = simpleDateFormat.parse(date_raw);
 		    	
-		    	Integer zipcode = Integer.parseInt(dataMapping.get("zip_code"));
+		    	String zipcode = (String) dataMapping.get("zip_code");
 				
 		    	Integer negTests = null;
 				if (dataMapping.get("NEG_tests").length() != 0) {

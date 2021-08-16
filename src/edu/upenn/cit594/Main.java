@@ -12,8 +12,7 @@ public class Main {
     public static void main(String[] args) {
     	
     
-    	
-    	
+    		
     	// check the number of arguments
     	if (args.length < 4) {
 			System.out.println("Error: number of arguments is incorrect");
@@ -48,12 +47,12 @@ public class Main {
 		
 		
 		// process data
-		Processor processor = new Processor(covidReader, populationReader, propertiesReader);
-		
-		
-		// UI for display
-		UI ui = new UI(processor);
-		ui.start();
+//		Processor processor = new Processor(covidReader, populationReader, propertiesReader);
+//		
+//		
+//		// UI for display
+//		UI ui = new UI(processor);
+//		ui.start();
 		
 		// create log file
     	

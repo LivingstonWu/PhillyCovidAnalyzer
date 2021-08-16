@@ -24,9 +24,9 @@ public class CovidJsonReader implements CovidReader {
 	
 	
     @Override
-    public Map<Integer, ArrayList<CovidData>> getAllCovidData() {
+    public Map<String, ArrayList<CovidData>> getAllCovidData() {
     	
-    	Map<Integer, ArrayList<CovidData>> CovidDataMap = new HashMap<Integer, ArrayList<CovidData>>();
+    	Map<String, ArrayList<CovidData>> CovidDataMap = new HashMap<String, ArrayList<CovidData>>();
     	
     	JSONParser jsonparser = new JSONParser();
     	
@@ -44,7 +44,7 @@ public class CovidJsonReader implements CovidReader {
 		    	Date timestamp = simpleDateFormat.parse(date_raw);
 				
 
-		    	Integer zipcode = ((Long) dataentry.get("zip_code")).intValue();
+		    	String zipcode = (String) dataentry.get("zip_code");
 				
 		    	Integer negTests = null;
 				if (dataentry.get("NEG_tests") != null) {

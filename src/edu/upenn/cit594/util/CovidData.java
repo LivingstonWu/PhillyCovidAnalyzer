@@ -5,7 +5,7 @@ import java.util.Date;
 public class CovidData {
 	
 	private Date timestamp;
-	private Integer zipcode;
+	private String zipcode;
 	private Integer negTests;
 	private Integer posTests;
 	private Integer deaths;
@@ -15,7 +15,7 @@ public class CovidData {
 	
 
 
-	public CovidData(Date timestamp, Integer zipcode, Integer negTests, Integer posTests, Integer deaths, Integer hospitalized, Integer partiallyVaccinated, Integer fullyVaccinated) {
+	public CovidData(Date timestamp, String zipcode, Integer negTests, Integer posTests, Integer deaths, Integer hospitalized, Integer partiallyVaccinated, Integer fullyVaccinated) {
 		this.timestamp = timestamp;
 		this.zipcode = zipcode;
 		this.negTests = negTests;
@@ -28,7 +28,7 @@ public class CovidData {
 	
 	
 	public Date getTimestamp() {return timestamp;}
-	public Integer getZipcode() {return zipcode;}
+	public String getZipcode() {return zipcode;}
 	public Integer getNegTests() {return negTests;}
 	public Integer getPosTests() {return posTests;}
 	public Integer getDeaths() {return deaths;}

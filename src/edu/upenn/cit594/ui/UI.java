@@ -33,26 +33,19 @@ public class UI {
 			
 			if (choice == 1) {
 				printPopulationAllZip();
-			}
-
-			if (choice == 2) {
+			} else if (choice == 2) {
 				printVaccinationPerZip();
-			}
-			
-			if (choice == 3) {
+			} else if (choice == 3) {
 				printAvgMktValue();
-			}
-			
-			if (choice == 4) {
+			} else if (choice == 4) {
 				printAvgLivArea();
-			}
-			
-			if (choice == 5) {
+			} else if (choice == 5) {
 				printResdMktValuePerCap();
-			}
-			
-			if (choice == 6) {
+			} else if (choice == 6) {
 				printCustomFeature();
+			} else {
+				System.out.println("Error: not valid input.");
+				break;
 			}
 			
 			System.out.println("Please enter the number to check covid data:");
@@ -77,9 +70,9 @@ public class UI {
 			
 			System.out.println(String.format("%5s %5s", "ENGIN", "OUTPUT"));
 			
-			TreeMap<Integer, Double> partialVaccinationData = this.processor.getPartialVaccinations();
+			TreeMap<String, Double> partialVaccinationData = this.processor.getPartialVaccinations();
 			
-	        for (Entry<Integer, Double> entry : partialVaccinationData.entrySet()) {
+	        for (Entry<String, Double> entry : partialVaccinationData.entrySet()) {
 	        	System.out.printf( "%5d %5f \n", entry.getKey(), entry.getValue());
 	        }
 									
@@ -89,9 +82,9 @@ public class UI {
 			
 			System.out.println(String.format("%5s %5s", "ENGIN", "OUTPUT"));
 			
-			TreeMap<Integer, Double> fullVaccinationData = this.processor.getFullVaccinations();
+			TreeMap<String, Double> fullVaccinationData = this.processor.getFullVaccinations();
 			
-	        for (Entry<Integer, Double> entry : fullVaccinationData.entrySet()) {
+	        for (Entry<String, Double> entry : fullVaccinationData.entrySet()) {
 	        	System.out.printf( "%5d %5f \n", entry.getKey(), entry.getValue());
 	        }
 						

@@ -7,5 +7,5 @@ import java.util.Map;
 import edu.upenn.cit594.util.*;
 
 public interface CovidReader {
-    public Map<Integer, ArrayList<CovidData>> getAllCovidData();
+    public Map<String, ArrayList<CovidData>> getAllCovidData();
 }

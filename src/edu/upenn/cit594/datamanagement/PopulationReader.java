@@ -11,14 +11,14 @@ public class PopulationReader {
         this.filename = filename;
     }
 
-    public HashMap<Integer, Integer> getPopulation() {
+    public HashMap<String, Integer> getPopulation() {
         // <key, value> -> <zip, population>
-        HashMap<Integer, Integer> populationMap = new HashMap<Integer, Integer>();
+        HashMap<String, Integer> populationMap = new HashMap<String, Integer>();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String [] lineTemp = line.split("\\s+");
-                Integer zipcode = Integer.parseInt(lineTemp[0].strip());
+                String zipcode = (lineTemp[0].strip());
                 Integer population = Integer.parseInt(lineTemp[1].strip());
                 populationMap.put(zipcode, population);
             }
