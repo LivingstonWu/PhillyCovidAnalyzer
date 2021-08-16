@@ -1,4 +1,4 @@
-package edu.upenn.cit594;
+package edu.upenn.cit594.Main;
 
 import edu.upenn.cit594.datamanagement.CovidCSVReader;
 import edu.upenn.cit594.datamanagement.CovidJsonReader;

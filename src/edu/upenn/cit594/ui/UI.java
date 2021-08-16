@@ -72,29 +72,29 @@ public class UI {
 		log.logInput(input);
 		input = input.toLowerCase();
 
-		if (input.equals("partial")) {
+		if (input.equalsIgnoreCase("partial")) {
 			
 			System.out.println(String.format("%5s %5s", "ENGIN", "OUTPUT"));
 			
 			TreeMap<String, Double> partialVaccinationData = this.processor.getPartialVaccinations();
 			
 	        for (Entry<String, Double> entry : partialVaccinationData.entrySet()) {
-	        	System.out.printf( "%5d %5f \n", entry.getKey(), entry.getValue());
+	        	System.out.printf( "%5s %1.4f \n", entry.getKey(), entry.getValue());
 	        }
 									
 			System.out.println(String.format("%5s %5s", "END", "OUTPUT"));
 			
-		} else if (input.equals("full")) {
+		} else if (input.equalsIgnoreCase("full")) {
 			
-			System.out.println(String.format("%5s %5s", "ENGIN", "OUTPUT"));
+			System.out.println(String.format("%5s %5s", "BEGIN", "OUTPUT"));
 			
 			TreeMap<String, Double> fullVaccinationData = this.processor.getFullVaccinations();
 			
 	        for (Entry<String, Double> entry : fullVaccinationData.entrySet()) {
-	        	System.out.printf( "%5d %5f \n", entry.getKey(), entry.getValue());
+	        	System.out.printf( "%5s %1.4f \n", entry.getKey(), entry.getValue());
 	        }
 						
-			System.out.println(String.format("%5s %5s", "END", "OUTPUT"));
+			System.out.println(String.format("%3s %5s", "END", "OUTPUT"));
 			
 		} else {
 			System.out.println("The input is not valid.");
@@ -104,34 +104,34 @@ public class UI {
 	
 	protected void printAvgMktValue() {
 		System.out.println("Enter a zipcode to show the average market value: ");
-		int zip = in.nextInt();
-		log.logInput(String.valueOf(zip));
-		
-		// pending edit for printing data
-		
+		String zip = in.next();
+		log.logInput(zip);
+		int result = this.processor.getAverageMarketValue(zip);
+		System.out.println(result);
 	}
 	
 	protected void printAvgLivArea() {
-		
-		System.out.println("Enter a zipcode to show the average market value: ");
-		int zip = in.nextInt();
-		log.logInput(String.valueOf(zip));
-		
-		// pending edit for printing data
-		
+		System.out.println("Enter a zipcode to show the average total livable area: ");
+		String zip = in.next();
+		log.logInput(zip);
+		int result = this.processor.getAverageLivableArea(zip);
+		System.out.println(result);
 	}
 	
 	protected void printResdMktValuePerCap() {
-		System.out.println("Enter a zipcode to show the average market value: ");
-		int zip = in.nextInt();
-		log.logInput(String.valueOf(zip));
-		// pending edit for printing data
+		System.out.println("Enter a zipcode to show the total residential market per capita: ");
+		String zip = in.next();
+		log.logInput(zip);
+		int result = this.processor.getTotalResidentialValuePerCapita(zip);
+		System.out.println(result);
 	}
 	
 	protected void printCustomFeature() {
-		
-		// pending
-		
+		System.out.println("Enter a zipcode to show death to average total livable area ratio per capita: ");
+		String zip = in.next();
+		log.logInput(zip);
+		double result = this.processor.getDeathToAverageLivablePerCapita(zip);
+		System.out.println(result);
 	}
 	
 	

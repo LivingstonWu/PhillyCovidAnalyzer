@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import edu.upenn.cit594.Main.Main;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,7 +61,7 @@ public class BasicTests {
         System.setIn(test_input);
 
         /* run the student main method */
-        edu.upenn.cit594.Main.main(args);
+        Main.main(args);
 
         /* Restore the actual input/output */
         System.setOut(realout);

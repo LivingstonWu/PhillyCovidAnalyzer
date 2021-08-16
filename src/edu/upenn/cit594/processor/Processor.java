@@ -71,7 +71,7 @@ public class Processor {
 				Date current_time = dataEntry.getTimestamp();
 				if (current_time.after(latestDate)) {
 					latestDate = current_time;
-					TotalFull = dataEntry.getPartiallyVaccinated();
+					TotalFull = dataEntry.getFullyVaccinated();
 				}
 			}
 			TotalFullPerCapita.put(zip, TotalFull);
@@ -269,15 +269,15 @@ public class Processor {
 	// method 6: death to "average total livable area" ratio per capita, by zipcpde
 	// input: zipcode
 	// resulting metric = total death at the zipcode / getAverageLivableArea(zipcode) / population at zipcode
-	public int getDeathToAverageLivablePerCapita(String zipcode) {
+	public double getDeathToAverageLivablePerCapita(String zipcode) {
 		if (!populationData.containsKey(zipcode) || !covidData.containsKey(zipcode) || !propertiesData.containsKey(zipcode)){
 			return 0;
 		}
-		int averageLivableArea = getAverageLivableArea(zipcode);
+		Double averageLivableArea = new Double(getAverageLivableArea(zipcode));
 		Map<String, Integer> deathZipMap =  getDeathsPerCapita(this.covidData);
-		int deathCount = deathZipMap.get(zipcode);
-		int populationAtZip = this.populationData.get(zipcode);
-		int result = deathCount/averageLivableArea/populationAtZip;
+		Double deathCount = new Double(deathZipMap.get(zipcode));
+		Double populationAtZip = new Double(this.populationData.get(zipcode));
+		double result = deathCount/averageLivableArea/populationAtZip;
 		return result;
 
 	}
