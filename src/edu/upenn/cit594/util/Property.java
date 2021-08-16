@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class Property {
 
-    private int zipcode;
-    private int marketValue;
+    private String  zipcode;
+    private String marketValue;
     private String buildingCode;
-    private int totalLivableArea;
+    private String totalLivableArea;
 
 
 
-    public Property(int zipcode, int marketValue, String buildingCode, int totalLivableArea) {
+    public Property(String zipcode, String marketValue, String buildingCode, String totalLivableArea) {
         this.zipcode = zipcode;
         this.buildingCode = buildingCode;
         this.marketValue = marketValue;
@@ -19,8 +19,8 @@ public class Property {
     }
 
 
-    public int getZipcode() {return zipcode;}
-    public int getTotalLivableArea() {return totalLivableArea;}
-    public int getMarketValue() {return marketValue;}
+    public String getZipcode() {return zipcode;}
+    public String getTotalLivableArea() {return totalLivableArea;}
+    public String getMarketValue() {return marketValue;}
     public String getBuildingCode() {return buildingCode;}
 }
