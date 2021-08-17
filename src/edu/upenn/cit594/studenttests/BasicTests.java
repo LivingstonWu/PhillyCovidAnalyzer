@@ -77,7 +77,6 @@ public class BasicTests {
         int state = 0;
         String line;
         while ((line = output_reader.readLine()) != null) {
-
             if (state == 0 || state == 2) {
                 if (line.equals("BEGIN OUTPUT"))
                     state = 1;
@@ -88,7 +87,6 @@ public class BasicTests {
                     items.add(line);
             }
         }
-
         if(state != 2) {
             System.err.println("No OUTPUT blocks detected");
             return null;
@@ -129,9 +127,9 @@ public class BasicTests {
     public void testTwice() throws Exception {
         makeSmallProperties("properties.csv", "small_properties.csv", 100);
 
-        String result1 = runMain(new String[] { "covid_data.json", "small_properties.csv", "population.txt", "small_test1.log" }, "2\n0\n");
+        String result1 = runMain(new String[] { "covid_data.json", "small_properties.csv", "population.txt", "small_test1.log" }, "2\nfull\n0\n");
         //System.out.println(result1);
-        String result2 = runMain(new String[] { "covid_data.csv", "small_properties.csv", "population.txt", "small_test2.log" }, "2\n0\n");
+        String result2 = runMain(new String[] { "covid_data.csv", "small_properties.csv", "population.txt", "small_test2.log" }, "2\nfull\n0\n");
 
         Set<String> sResult1 = new HashSet<>(extractResults(result1));
         Set<String> sResult2 = new HashSet<>(extractResults(result2));

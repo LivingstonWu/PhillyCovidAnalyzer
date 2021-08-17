@@ -29,33 +29,40 @@ public class UI {
 		System.out.println("Enter number 5 to show the total residential market value per capita for a specified ZIP Code.");
 		System.out.println("Enter number 6 to show the custom attribute.");  
 		System.out.println("Enter number 0 to exit the program.");
-		System.out.println("Please enter the number to check covid data: ");
-		int choice = in.nextInt();
-		log.logInput(String.valueOf(choice));
 		
-		while (choice != 0) {
-			
-			if (choice == 1) {
-				printPopulationAllZip();
-			} else if (choice == 2) {
-				printVaccinationPerZip();
-			} else if (choice == 3) {
-				printAvgMktValue();
-			} else if (choice == 4) {
-				printAvgLivArea();
-			} else if (choice == 5) {
-				printResdMktValuePerCap();
-			} else if (choice == 6) {
-				printCustomFeature();
-			} else {
-				System.out.println("Error: not valid input.");
-				log.logOutPut("Error: not valid input.");
-				break;
+		try {
+			while (true) {
+				System.out.println("Please enter the number to check covid data: ");
+				String input = in.next();
+				log.logInput(input);
+				int choice = Integer.parseInt(input);
+
+				if (choice == 1) {
+					printPopulationAllZip();
+				} else if (choice == 2) {
+					printVaccinationPerZip();
+				} else if (choice == 3) {
+					printAvgMktValue();
+				} else if (choice == 4) {
+					printAvgLivArea();
+				} else if (choice == 5) {
+					printResdMktValuePerCap();
+				} else if (choice == 6) {
+					printCustomFeature();
+				} else if (choice == 0) {
+					System.out.println("Exit program.");
+					break;
+				} else {
+					System.out.println("Error: not valid input.");
+					log.logOutPut("Error: not valid input.");
+					break;
+				}
+
 			}
-			
-			System.out.println("Please enter the number to check covid data:");
-			choice = in.nextInt();
-			log.logInput(String.valueOf(choice));
+		} catch (Exception ex) {
+			System.out.println("Invalid input, program ended.");
+//			log.logOutPut("Invalid input, program ended.");
+			in.close();
 		}
 		
 		System.out.println("Program ended.");
@@ -64,12 +71,14 @@ public class UI {
 	
 	
 	protected void printPopulationAllZip() {
-		String temp = "Total Population for All ZIP Codes: " + this.processor.getTotalPopulation();
+		String temp = String.valueOf(this.processor.getTotalPopulation());
+		System.out.println("BEGIN OUTPUT");
 		System.out.println(temp);
-		log.logOutPut(temp);
+		System.out.println("END OUTPUT");
+//		log.logOutPut(temp);
 	}
 	
-	protected void printVaccinationPerZip() {
+	protected void printVaccinationPerZip() throws Exception {
 		System.out.println("Are you looking for total partial or full Vaccinations per capitas for each zipcode? Please type in partial/full: ");
 		String input = in.next();
 		log.logInput(input);
@@ -78,42 +87,40 @@ public class UI {
 		if (input.equalsIgnoreCase("partial")) {
 			
 			System.out.println("BEGIN OUTPUT");
-			log.logOutPut("BEGIN OUTPUT");
+//			log.logOutPut("BEGIN OUTPUT");
 			
 			TreeMap<String, Double> partialVaccinationData = this.processor.getPartialVaccinations();
 			
 	        for (Entry<String, Double> entry : partialVaccinationData.entrySet()) {
-	        	String temp = (entry.getKey() + "\t" + entry.getValue());
-//	        	System.out.printf( "%5s %1.4f \n", entry.getKey(), entry.getValue());
-	        	System.out.printf(temp + "\n");
-	        	log.logOutPut(temp);
+	        	String temp = (entry.getKey() + " " + String.format("%1.4f", entry.getValue()));
+	        	System.out.println(temp);
+//	        	log.logOutPut(temp);
 	        }
 									
 	        System.out.println("END OUTPUT");
-	        log.logOutPut("END OUTPUT");
+//	        log.logOutPut("END OUTPUT");
 			
 		} else if (input.equalsIgnoreCase("full")) {
 			
 			System.out.println("BEGIN OUTPUT");
-			log.logOutPut("BEGIN OUTPUT");
+//			log.logOutPut("BEGIN OUTPUT");
 			
 			TreeMap<String, Double> fullVaccinationData = this.processor.getFullVaccinations();
 			
 	        for (Entry<String, Double> entry : fullVaccinationData.entrySet()) {
-	        	
-	        	String temp = (entry.getKey() + "\t" + entry.getValue());
-//	        	System.out.printf( "%5s %1.4f \n", entry.getKey(), entry.getValue());
-	        	System.out.printf(temp+ "\n");
-	        	log.logOutPut(temp);
+				String temp = (entry.getKey() + " " + String.format("%1.4f", entry.getValue()));
+	        	System.out.println(temp);
+//	        	log.logOutPut(temp);
 	        	
 	        }
 						
 	        System.out.println("END OUTPUT");
-	        log.logOutPut("END OUTPUT");
+//	        log.logOutPut("END OUTPUT");
 			
 		} else {
 			System.out.println("The input is not valid.");
-			log.logOutPut("The input is not valid.");
+//			log.logOutPut("The input is not valid.");
+			throw new Exception("invalid input, program terminated.");
 		}
 		
 	}
@@ -125,17 +132,11 @@ public class UI {
 			String zip = in.next();
 			log.logInput(zip);
 			int result = this.processor.getAverageMarketValue(zip);
-			
-			if (result != 0) {
-				System.out.println(result);
-				log.logOutPut(String.valueOf(result));
-				break;
-			} else {
-				System.out.println("Invalid zipcode.");
-				log.logOutPut("Invalid zipcode.");
-			}
-			
-
+			System.out.println("BEGIN OUTPUT");
+			System.out.println(result);
+//			log.logOutPut(String.valueOf(result));
+			System.out.println("END OUTPUT");
+			break;
 		}
 		
 		
@@ -149,16 +150,11 @@ public class UI {
 			String zip = in.next();
 			log.logInput(zip);
 			int result = this.processor.getAverageLivableArea(zip);
-			
-			if (result != 0) {
-				System.out.println(result);
-				log.logOutPut(String.valueOf(result));
-				break;
-			} else {
-				System.out.println("Invalid zipcode.");
-				log.logOutPut("Invalid zipcode.");
-			}
-			
+			System.out.println("BEGIN OUTPUT");
+			System.out.println(result);
+//			log.logOutPut(String.valueOf(result));
+			System.out.println("END OUTPUT");
+			break;
 
 		}
 		
@@ -172,16 +168,11 @@ public class UI {
 			String zip = in.next();
 			log.logInput(zip);
 			int result = this.processor.getTotalResidentialValuePerCapita(zip);
-						
-			if (result != 0) {
-				System.out.println(result);
-				log.logOutPut(String.valueOf(result));
-				break;
-			} else {
-				System.out.println("Invalid zipcode.");
-				log.logOutPut("Invalid zipcode.");
-			}
-
+			System.out.println("BEGIN OUTPUT");
+			System.out.println(result);
+//			log.logOutPut(String.valueOf(result));
+			System.out.println("END OUTPUT");
+			break;
 		}
 		
 
@@ -190,21 +181,15 @@ public class UI {
 	protected void printCustomFeature() {
 		
 		while (true) {
-			System.out.println("Enter a zipcode to show death to average total livable area ratio per capita: ");
+			System.out.println("Enter a zipcode to show survival market value per capita by zipcpde: ");
 			String zip = in.next();
 			log.logInput(zip);
 			double result = this.processor.getDeathToAverageLivablePerCapita(zip);
-			
-			if (result != 0) {
-				System.out.println(result);
-				log.logOutPut(String.valueOf(result));
-				log.logOutPut(String.valueOf(result));
-				break;
-			} else {
-				System.out.println("Invalid zipcode.");
-				log.logOutPut("Invalid zipcode.");
-			}
-			
+			System.out.println("BEGIN OUTPUT");
+			System.out.println(result);
+//			log.logOutPut(String.valueOf(result));
+			System.out.println("END OUTPUT");
+			break;
 		}
 		
 

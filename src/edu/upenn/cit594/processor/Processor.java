@@ -226,7 +226,7 @@ public class Processor {
 	// deal with invalid zipcode(!this.propertiesData.containsKey(zipcode)) input in UI
 	public int getAverageMarketValue(String zipcode) {
 		AverageCalculator marketValueCalculator = new AverageMarketValueCalculator();
-		if (!this.propertiesData.containsKey(zipcode)) return 0;
+		if (!this.propertiesData.containsKey(zipcode) && zipcode.matches("\\d{5}")) return 0;
 		return marketValueCalculator.calculateAverage(zipcode, this.propertiesData);
 	}
 
@@ -266,9 +266,10 @@ public class Processor {
 	}
 
 
-	// method 6: death to "average total livable area" ratio per capita, by zipcpde
+	// method 6: get survival market value per capita by zipcpde
 	// input: zipcode
-	// resulting metric = total death at the zipcode / getAverageLivableArea(zipcode) / population at zipcode
+	// resulting metric(survival market value) = [1 - (total death at the zipcode / population at zipcode)] * total residential market value per capita
+	// this metric can help us to understand what is the remaining or survival market value per capita after including the death rate(survival rate) at a certain area
 	public double getDeathToAverageLivablePerCapita(String zipcode) {
 		if (!populationData.containsKey(zipcode) || !covidData.containsKey(zipcode) || !propertiesData.containsKey(zipcode)){
 			return 0;
@@ -276,8 +277,9 @@ public class Processor {
 		Double averageLivableArea = new Double(getAverageLivableArea(zipcode));
 		Map<String, Integer> deathZipMap =  getDeathsPerCapita(this.covidData);
 		Double deathCount = new Double(deathZipMap.get(zipcode));
+		int marketValuePerCapita = getTotalResidentialValuePerCapita(zipcode);
 		Double populationAtZip = new Double(this.populationData.get(zipcode));
-		double result = deathCount/averageLivableArea/populationAtZip;
+		double result = (1 - deathCount/populationAtZip) * marketValuePerCapita;
 		return result;
 
 	}

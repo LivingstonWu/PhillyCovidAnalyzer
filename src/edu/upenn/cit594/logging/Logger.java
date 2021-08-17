@@ -13,14 +13,7 @@ public class Logger {
 
     // private constructor
     private Logger() {
-
     }
-
-
-    // singleton accessor method
-//    public static Logger getInstance() {
-//    	return instance;
-//    	}
     
     public static Logger getInstance(String name) {
     	
@@ -55,9 +48,6 @@ public class Logger {
     	
     	String currentTime = String.valueOf(System.currentTimeMillis());
 
-//    	String pattern = "yyyy-MM-dd HH:mm:ss";
-//    	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-    	   	
     	out.print(currentTime +"\t");
         out.print(msg + "\n");
         out.flush();
@@ -76,7 +66,7 @@ public class Logger {
     	
     	for (String s: args) {
     		out.print(s);
-    		out.print("\t");
+    		out.print(" ");
     		}
     	out.print("\n");
     	       
@@ -86,7 +76,9 @@ public class Logger {
     
     
     public void logOutPut(String msg) {
-    	out.print(msg + "\n");
+        String currentTime = String.valueOf(System.currentTimeMillis());
+        out.print(currentTime +"\t" + msg + "\n");
+        out.flush();
     }
     
     
