@@ -53,15 +53,11 @@ public class Logger {
         out.flush();
     }
     
-    
-    
     public void logArgs(String[] args) {
     	
     	String currentTime = String.valueOf(System.currentTimeMillis());
 
-//    	String pattern = "yyyy-MM-dd HH:mm:ss";
-//    	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-    	   	
+
     	out.print(currentTime + "\t");
     	
     	for (String s: args) {
@@ -72,17 +68,7 @@ public class Logger {
     	       
         out.flush();
     }
-    
-    
-    
-    public void logOutPut(String msg) {
-        String currentTime = String.valueOf(System.currentTimeMillis());
-        out.print(currentTime +"\t" + msg + "\n");
-        out.flush();
-    }
-    
-    
-    
+
     public void closeLog() {
     	out.close();
 

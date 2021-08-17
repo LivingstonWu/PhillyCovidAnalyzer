@@ -235,7 +235,7 @@ public class Processor {
 	// deal with invalid zipcode input in UI
 	public int getAverageLivableArea(String zipcode) {
 		AverageCalculator livableAreaCalculator  = new AverageLivableAreaCalculator();
-		if (!this.propertiesData.containsKey(zipcode)) return 0;
+		if (!this.propertiesData.containsKey(zipcode) && zipcode.matches("\\d{5}")) return 0;
 		return livableAreaCalculator.calculateAverage(zipcode, this.propertiesData);
 	}
 
@@ -243,9 +243,12 @@ public class Processor {
 	// method5  total residential market value per capita
 	// user input zipcode
 	// deal with invalid zipcode input in UI
-	public int getTotalResidentialValuePerCapita(String zipcode) {
+	public int getTotalResidentialValuePerCapita(String zipcode) throws Exception {
 		double totalResidentialMarketValue = 0;
-		if (!populationData.containsKey(zipcode) || !propertiesData.containsKey(zipcode)){
+		if (!zipcode.matches("\\d{5}")){
+			throw new Exception("invalid zipcode input");
+		}
+		if ((!populationData.containsKey(zipcode) && zipcode.matches("\\d{5}")) || (!propertiesData.containsKey(zipcode) && zipcode.matches("\\d{5}")) ){
 			return 0;
 		}
 		int totalPopulationAtZipcode = this.populationData.get(zipcode);
@@ -259,7 +262,6 @@ public class Processor {
 				// logging
 			}
 		}
-
 		if (totalPopulationAtZipcode == 0 || totalResidentialMarketValue == 0) return 0;
 		int perCapita = (int) (totalResidentialMarketValue/totalPopulationAtZipcode);
 		return perCapita;
@@ -270,7 +272,10 @@ public class Processor {
 	// input: zipcode
 	// resulting metric(survival market value) = [1 - (total death at the zipcode / population at zipcode)] * total residential market value per capita
 	// this metric can help us to understand what is the remaining or survival market value per capita after including the death rate(survival rate) at a certain area
-	public double getDeathToAverageLivablePerCapita(String zipcode) {
+	public double getDeathToAverageLivablePerCapita(String zipcode) throws Exception {
+		if (!zipcode.matches("\\d{5}")){
+			throw new Exception("invalid zipcode input");
+		}
 		if (!populationData.containsKey(zipcode) || !covidData.containsKey(zipcode) || !propertiesData.containsKey(zipcode)){
 			return 0;
 		}

@@ -33,6 +33,8 @@ public class UI {
 		try {
 			while (true) {
 				System.out.println("Please enter the number to check covid data: ");
+				System.out.println(">");
+				System.out.flush();
 				String input = in.next();
 				log.logInput(input);
 				int choice = Integer.parseInt(input);
@@ -54,14 +56,12 @@ public class UI {
 					break;
 				} else {
 					System.out.println("Error: not valid input.");
-					log.logOutPut("Error: not valid input.");
 					break;
 				}
 
 			}
 		} catch (Exception ex) {
 			System.out.println("Invalid input, program ended.");
-//			log.logOutPut("Invalid input, program ended.");
 			in.close();
 		}
 		
@@ -75,11 +75,12 @@ public class UI {
 		System.out.println("BEGIN OUTPUT");
 		System.out.println(temp);
 		System.out.println("END OUTPUT");
-//		log.logOutPut(temp);
 	}
 	
 	protected void printVaccinationPerZip() throws Exception {
 		System.out.println("Are you looking for total partial or full Vaccinations per capitas for each zipcode? Please type in partial/full: ");
+		System.out.println(">");
+		System.out.flush();
 		String input = in.next();
 		log.logInput(input);
 		input = input.toLowerCase();
@@ -87,39 +88,28 @@ public class UI {
 		if (input.equalsIgnoreCase("partial")) {
 			
 			System.out.println("BEGIN OUTPUT");
-//			log.logOutPut("BEGIN OUTPUT");
-			
 			TreeMap<String, Double> partialVaccinationData = this.processor.getPartialVaccinations();
 			
 	        for (Entry<String, Double> entry : partialVaccinationData.entrySet()) {
 	        	String temp = (entry.getKey() + " " + String.format("%1.4f", entry.getValue()));
 	        	System.out.println(temp);
-//	        	log.logOutPut(temp);
 	        }
 									
 	        System.out.println("END OUTPUT");
-//	        log.logOutPut("END OUTPUT");
-			
 		} else if (input.equalsIgnoreCase("full")) {
 			
 			System.out.println("BEGIN OUTPUT");
-//			log.logOutPut("BEGIN OUTPUT");
-			
 			TreeMap<String, Double> fullVaccinationData = this.processor.getFullVaccinations();
 			
 	        for (Entry<String, Double> entry : fullVaccinationData.entrySet()) {
 				String temp = (entry.getKey() + " " + String.format("%1.4f", entry.getValue()));
 	        	System.out.println(temp);
-//	        	log.logOutPut(temp);
-	        	
 	        }
 						
 	        System.out.println("END OUTPUT");
-//	        log.logOutPut("END OUTPUT");
 			
 		} else {
 			System.out.println("The input is not valid.");
-//			log.logOutPut("The input is not valid.");
 			throw new Exception("invalid input, program terminated.");
 		}
 		
@@ -129,12 +119,13 @@ public class UI {
 		
 		while (true) {
 			System.out.println("Enter a zipcode to show the average market value: ");
+			System.out.println(">");
+			System.out.flush();
 			String zip = in.next();
 			log.logInput(zip);
 			int result = this.processor.getAverageMarketValue(zip);
 			System.out.println("BEGIN OUTPUT");
 			System.out.println(result);
-//			log.logOutPut(String.valueOf(result));
 			System.out.println("END OUTPUT");
 			break;
 		}
@@ -147,12 +138,13 @@ public class UI {
 		
 		while (true) {
 			System.out.println("Enter a zipcode to show the average total livable area: ");
+			System.out.println(">");
+			System.out.flush();
 			String zip = in.next();
 			log.logInput(zip);
 			int result = this.processor.getAverageLivableArea(zip);
 			System.out.println("BEGIN OUTPUT");
 			System.out.println(result);
-//			log.logOutPut(String.valueOf(result));
 			System.out.println("END OUTPUT");
 			break;
 
@@ -161,16 +153,17 @@ public class UI {
 
 	}
 	
-	protected void printResdMktValuePerCap() {
+	protected void printResdMktValuePerCap() throws Exception {
 		
 		while (true) {
 			System.out.println("Enter a zipcode to show the total residential market per capita: ");
+			System.out.println(">");
+			System.out.flush();
 			String zip = in.next();
 			log.logInput(zip);
 			int result = this.processor.getTotalResidentialValuePerCapita(zip);
 			System.out.println("BEGIN OUTPUT");
 			System.out.println(result);
-//			log.logOutPut(String.valueOf(result));
 			System.out.println("END OUTPUT");
 			break;
 		}
@@ -178,23 +171,20 @@ public class UI {
 
 	}
 	
-	protected void printCustomFeature() {
+	protected void printCustomFeature() throws Exception {
 		
 		while (true) {
 			System.out.println("Enter a zipcode to show survival market value per capita by zipcpde: ");
+			System.out.println(">");
+			System.out.flush();
 			String zip = in.next();
 			log.logInput(zip);
 			double result = this.processor.getDeathToAverageLivablePerCapita(zip);
 			System.out.println("BEGIN OUTPUT");
 			System.out.println(result);
-//			log.logOutPut(String.valueOf(result));
 			System.out.println("END OUTPUT");
 			break;
 		}
-		
-
-
 	}
-	
 	
 }
